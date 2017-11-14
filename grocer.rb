@@ -19,7 +19,7 @@ def apply_coupons (cart, coupons)
   discounts_applied ={}
   coupons.each do |coupon|
     cart.each do  |grocery, details|
-      if coupon[:item] == grocery && coupon[:num] <= cart[grocery][:count] 
+      if coupon[:item] == grocery && coupon[:num] <= cart[grocery][:count]
         if !discounts_applied.keys.include?("#{grocery} W/COUPON")
           discounts_applied["#{grocery} W/COUPON"] = { price: coupon[:cost], count: 1 }
         else
