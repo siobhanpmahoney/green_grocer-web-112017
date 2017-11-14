@@ -19,15 +19,15 @@ def apply_coupons (cart, coupons)
   discounts_applied ={}
   coupons.each do |coupon|
     cart.each do  |grocery, details|
-      coupon_count = 0
-      if coupon[:item] == grocery
+      if coupon[:item] == grocery && coupon[:num] <= cart[grocery][:count] 
         if !discounts_applied.keys.include?("#{grocery} W/COUPON")
-          if coupon[:num] <= cart[grocery][:count]
-            discounts_applied["#{grocery} W/COUPON"] = { price: coupon[:cost], count: coupon_count }
-            discounts_applied["#{grocery} W/COUPON"][:count] += 1
-            discounts_applied["#{grocery} W/COUPON"][:clearance] = cart[grocery][:clearance]
-            cart[grocery][:count] = cart[grocery][:count] - coupon[:num]
-          end
+          discounts_applied["#{grocery} W/COUPON"] = { price: coupon[:cost], count: 1 }
+        else
+          discounts_applied["#{grocery} W/COUPON"][:count] += 1
+        end
+        discounts_applied["#{grocery} W/COUPON"][:clearance] = cart[grocery][:clearance]
+        if cart[grocery][:count] >= coupon[:num]
+          cart[grocery][:count] = cart[grocery][:count] - coupon[:num]
         end
       end
     end
