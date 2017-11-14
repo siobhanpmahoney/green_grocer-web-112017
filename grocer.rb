@@ -24,12 +24,10 @@ def apply_coupons (cart, coupons)
         if !discounts_applied.keys.include?("#{grocery} W/COUPON")
           if coupon[:num] <= cart[grocery][:count] 
             discounts_applied["#{grocery} W/COUPON"] = { price: coupon[:cost], count: coupon_count }
-          end
-        end
-        discounts_applied["#{grocery} W/COUPON"][:count] += 1
-        discounts_applied["#{grocery} W/COUPON"][:clearance] = cart[grocery][:clearance]
-        if cart[grocery][:count] >= coupon[:num]
-          cart[grocery][:count] = cart[grocery][:count] - coupon[:num]
+            discounts_applied["#{grocery} W/COUPON"][:count] += 1
+            discounts_applied["#{grocery} W/COUPON"][:clearance] = cart[grocery][:clearance]
+            cart[grocery][:count] = cart[grocery][:count] - coupon[:num]
+          end 
         end
       end
     end
